@@ -1,6 +1,6 @@
 #provision rabbitmq on a ec2 instance
 
-resource "aws_spot_instance_request" "public_instance" {      
+resource "aws_spot_instance_request" "rabbitmq" {      
   ami                     = data.aws_ami.rabbitmq.id  # fetching ami id from datasource
   instance_type           = var.RABBITMQ_INSTANCE_TYPE
   subnet_id               = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS[0]
@@ -17,4 +17,19 @@ resource "aws_spot_instance_request" "public_instance" {
   
 }
 
+# Once the server is provisioned, I would like run a playbook that should Configure the RabbitMQ Installation 
+resource "null_resource"  "app_install" {
+    connection {
+    type     = "ssh"
+    user     = "centos"
+    password = "DevOps321"
+    host     = aws_spot_instance_request.rabbitmq.private_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+        "ansible-pull -U https://github.com/b57-clouddevops/ansible.git -e ENV=dev -e COMPONENT=rabbitmq roboshop-pull.yml"
+    ]
+  }
+}
 
