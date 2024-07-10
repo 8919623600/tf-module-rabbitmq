@@ -1,6 +1,6 @@
 #provision rabbitmq on a ec2 instance
 
-resource "aws_spot_instance_request" "rabbitmq" {      
+resource "aws_spot_instance_request" "rabbitmq" {    
   ami                     = data.aws_ami.rabbitmq.id  # fetching ami id from datasource
   instance_type           = var.RABBITMQ_INSTANCE_TYPE
   subnet_id               = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS[1]
@@ -26,8 +26,6 @@ resource "null_resource"  "app_install" {
 
   provisioner "remote-exec" {
     inline = [
-        # "ansible-pull -U https://github.com/b57-clouddevops/ansible.git -e ENV=dev -e COMPONENT=rabbitmq roboshop-pull.yml"
-        # "sudo ansible-pull -U https://github.com/8919623600/ansible.git -i /project/roles/inv -e ENV=dev -e COMPONENT=rabbitmq project/ansible-pull.yaml"
         "ansible-pull -U https://github.com/8919623600/ansible.git -e ENV=dev -e COMPONENT=rabbitmq project/ansible-pull.yaml"
     ]
   }
