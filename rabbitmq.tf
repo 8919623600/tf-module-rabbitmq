@@ -3,7 +3,7 @@
 resource "aws_spot_instance_request" "rabbitmq" {      
   ami                     = data.aws_ami.rabbitmq.id  # fetching ami id from datasource
   instance_type           = var.RABBITMQ_INSTANCE_TYPE
-  subnet_id               = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS[0]
+  subnet_id               = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS[1]
   vpc_security_group_ids  = [aws_security_group.rabbitmq_sg.id]
   wait_for_fulfillment    = true          #  aws waits for 10 mins to provision ( only in case if aws experiences resource limitation  )
 
