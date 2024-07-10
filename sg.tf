@@ -19,7 +19,7 @@ tags = {
   ingress {
     from_port       = "22"
     to_port         = "22"
-    protocol        = "ssh"
+    protocol        = "tcp"
     # cidr_blocks     = [data.terraform_remote_state.vpc.outputs.VPC_ID, data.terraform_remote_state.vpc.outputs.DEFAULT_VPC_CIDR]
     cidr_blocks     = [data.terraform_remote_state.vpc.outputs.VPC_CIDR]
 
