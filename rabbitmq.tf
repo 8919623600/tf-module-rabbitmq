@@ -27,7 +27,7 @@ resource "null_resource"  "app_install" {
   provisioner "remote-exec" {
     inline = [
         # "ansible-pull -U https://github.com/b57-clouddevops/ansible.git -e ENV=dev -e COMPONENT=rabbitmq roboshop-pull.yml"
-        "ansible-pull -U https://github.com/8919623600/ansible.git -e ENV=dev -e COMPONENT=rabbitmq project/roboshop-pull.yml"
+        "ansible-pull -U https://github.com/8919623600/ansible.git -e ENV=dev -e COMPONENT=rabbitmq project/ansible-pull.yaml"
     ]
   }
 }
